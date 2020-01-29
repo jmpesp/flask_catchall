@@ -17,6 +17,10 @@ def catch_all(path):
         headers[key] = value
     response = {"path": path, "headers": headers, "args": request.args}
     response = json.dumps(response, indent=2)
+
+    if path == "sleep":
+        time.sleep(int(request.args["time"]))
+
     print(response)
     return response
 
