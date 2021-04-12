@@ -27,7 +27,6 @@ def catch_all(path):
     if path == "sleep":
         time.sleep(int(request.args["time"]))
 
-    print(response)
     resp = Response(response)
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
