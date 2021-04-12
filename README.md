@@ -11,5 +11,7 @@ A simple Flask app that returns request details.
       },
       "args": {
         "please": "ignore"
-      }
+      },
+      "form": {},
+      "raw_data": "b''"
     }

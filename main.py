@@ -4,7 +4,7 @@ import time
 import json
 
 
-from flask import Flask, request, jsonify, request
+from flask import Flask, request, jsonify, request, Response
 app = Flask(__name__)
 
 
@@ -15,17 +15,25 @@ def catch_all(path):
     headers = {}
     for key,value in request.headers:
         headers[key] = value
-    response = {"path": path, "headers": headers, "args": request.args}
-    response = json.dumps(response, indent=2)
+    response = {
+        "path": path,
+        "headers": headers,
+        "args": request.args,
+        "form": request.form,
+        "raw_data": request.data,
+    }
+    response = json.dumps(response, indent=2, default=str)
 
     if path == "sleep":
         time.sleep(int(request.args["time"]))
 
     print(response)
-    return response
+    resp = Response(response)
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    return resp
 
 
 if __name__ == "__main__":
-    #app.run(host="0.0.0.0", debug=True, port=12345)
+    #app.debug = True
     app.run(host="0.0.0.0", port=12345)
 
